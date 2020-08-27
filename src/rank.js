@@ -10,43 +10,35 @@ function voyageRisk(voyage) {
 }
 
 function hasChina(history) {
-  return history.some(v => CHINA === v.zone);
+  return history.some(v => isChinaZone(v.zone));
 }
 
 function captainHistoryRisk(voyage, history) {
   let result = history.length < 5 ? 5 : 1;
   result += history.filter(v => v.profit < 0).length;
-  result -= voyage.zone === CHINA && hasChina(history) ? 2 : 0;
+  result -= isChinaZone(voyage.zone) && hasChina(history) ? 2 : 0;
   return Math.max(result, 0);
+}
+
+function isChinaZone(zone) {
+  return zone === CHINA;
 }
 
 function voyageProfitFactor(voyage, history) {
   let result = 2;
-  if (voyage.zone === CHINA) {
+  if (isChinaZone(voyage.zone)) {
     result += 1;
   }
   if (voyage.zone === EASTINDIES) {
     result += 1;
   }
-  if (voyage.zone === CHINA && hasChina(history)) {
-    result += 3;
-    if (history.length > 10) {
-      result += 1;
-    }
-    if (voyage.length > 12) {
-      result += 1;
-    }
-    if (voyage.length > 18) {
-      result -= 1;
-    }
+  if (isChinaZone(voyage.zone) && hasChina(history)) {
+    result += history.length > 10 ? 4 : 3;
+    result += voyage.length > 18 ? 0 : voyage.length > 12 ? 1 : 0;
   }
   else {
-    if (history.length > 8) {
-      result += 1;
-    }
-    if (voyage.length > 14) {
-      result -= 1;
-    }
+    result += history.length > 8 ? 1 : 0;
+    result -= voyage.length > 14 ? 1 : 0;
   }
   return result;
 }
