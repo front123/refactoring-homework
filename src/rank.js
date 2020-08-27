@@ -62,16 +62,20 @@ function voyageProfitFactor (voyage, history) {
   return result;
 }
 
-function rating (voyage, history) {
-  const vpf = voyageProfitFactor(voyage, history);
-  const vr = voyageRisk(voyage);
-  const chr = captainHistoryRisk(voyage, history);
+function compare(vpf, vr, chr){
   if (vpf * 3 > (vr + chr * 2)) {
     return 'A';
   }
   else {
     return 'B';
   }
+}
+
+function rating (voyage, history) {
+  const vpf = voyageProfitFactor(voyage, history);
+  const vr = voyageRisk(voyage);
+  const chr = captainHistoryRisk(voyage, history);
+  return compare(vpf, vr, chr);
 }
 
 module.exports = {
