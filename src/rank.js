@@ -1,3 +1,6 @@
+const {CHINA, EASTINDIES} = require('./constant')
+const places = [CHINA, EASTINDIES];
+
 function voyageRisk (voyage) {
   let result = 1;
   if (voyage.length > 4) {
@@ -6,17 +9,14 @@ function voyageRisk (voyage) {
   if (voyage.length > 8) {
     result += voyage.length - 8;
   }
-  if ([
-    'china',
-    'east-indies',
-  ].includes(voyage.zone)) {
+  if (places.includes(voyage.zone)) {
     result += 4;
   }
   return Math.max(result, 0);
 }
 
 function hasChina (history) {
-  return history.some(v => 'china' === v.zone);
+  return history.some(v => CHINA === v.zone);
 }
 
 function captainHistoryRisk (voyage, history) {
@@ -25,7 +25,7 @@ function captainHistoryRisk (voyage, history) {
     result += 4;
   }
   result += history.filter(v => v.profit < 0).length;
-  if (voyage.zone === 'china' && hasChina(history)) {
+  if (voyage.zone === CHINA && hasChina(history)) {
     result -= 2;
   }
   return Math.max(result, 0);
@@ -33,13 +33,13 @@ function captainHistoryRisk (voyage, history) {
 
 function voyageProfitFactor (voyage, history) {
   let result = 2;
-  if (voyage.zone === 'china') {
+  if (voyage.zone === CHINA) {
     result += 1;
   }
-  if (voyage.zone === 'east-indies') {
+  if (voyage.zone === EASTINDIES) {
     result += 1;
   }
-  if (voyage.zone === 'china' && hasChina(history)) {
+  if (voyage.zone === CHINA && hasChina(history)) {
     result += 3;
     if (history.length > 10) {
       result += 1;
@@ -82,25 +82,3 @@ module.exports = {
   rating
 };
 
-const voyage = {
-  zone: 'west-indies',
-  length: 10,
-};
-const history = [
-  {
-    zone: 'east-indies',
-    profit: 5,
-  },{
-    zone: 'west-indies',
-    profit: 15,
-  },{
-    zone: 'china',
-    profit: -2,
-  },
-  {
-    zone: 'west-africa',
-    profit: 7,
-  },
-];
-// const myRating = rating(voyage, history);
-// console.log(`myRating: ${myRating}`);

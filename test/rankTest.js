@@ -27,7 +27,7 @@ rankTest('should return B when rating given voyage and history', t => {
 });
 
 rankTest('should return A \
-when voyageRisk \
+when rating \
 given voyage length is 10 and zone is china \
 and history length is 18 and history has china zone', t => {
   //given
@@ -109,7 +109,7 @@ and history length is 18 and history has china zone', t => {
 });
 
 rankTest('should return B \
-when voyageRisk \
+when rating \
 given voyage length is 10 and zone is east-indies \
 and history length is 14', t => {
   //given
