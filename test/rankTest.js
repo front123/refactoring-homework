@@ -110,12 +110,12 @@ and history length is 18 and history has china zone', t => {
 
 rankTest('should return B \
 when rating \
-given voyage length is 10 and zone is east-indies \
+given voyage length is 15 and zone is east-indies \
 and history length is 14', t => {
   //given
   let voyage = {
     zone: 'east-indies',
-    length: 10,
+    length: 15,
   };
 
   const history = [
