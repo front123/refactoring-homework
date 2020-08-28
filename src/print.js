@@ -20,11 +20,8 @@ function printOwing(invoice) {
   let outstanding = calculateOutstanding(invoice.borderSpacing);
   invoice.dueDate = getDueDate();
   const detail = generateDetail(invoice, outstanding);
-  if (require.main === module) {
-    console.log(detail);
-  } else {
-    return detail;
-  }
+  console.log(detail);
+  return detail;
 }
 
 module.exports = {
