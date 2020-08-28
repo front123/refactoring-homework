@@ -45,3 +45,18 @@ deliveryTest('should return 4 when delivery date given anOrder with state is MA 
 
   t.is(result, 4);
 })
+
+deliveryTest('should return 6 when delivery date given anOrder with state is CN and isPush is false', t => {
+  let anOrder = {
+    deliveryState: 'CN',
+    placedOn: {
+      plusDays: function(time){
+        return time;
+      }
+    }
+  }
+
+  let result = deliveryDate(anOrder, false);
+
+  t.is(result, 6);
+})
