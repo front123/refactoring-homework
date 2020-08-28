@@ -12,5 +12,6 @@ printTest('should return correct owes when printOwing given a invoice', t => {
 **** Customer Owes ****
 ***********************
 name: front
-amount: 3`);
+amount: 3
+amount: 9/27/2020`);
 })

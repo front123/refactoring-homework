@@ -5,12 +5,15 @@ function calculateOutstanding(borderSpacing){
   }
   return totalAmount;
 }
+
+function getDueDate(){
+  const today = new Date();
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+}
+
 function printOwing(invoice) {
   let outstanding = calculateOutstanding(invoice.borderSpacing);
-
-  // record due date
-  const today = new Date();
-  invoice.dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+  invoice.dueDate = getDueDate();
 
   // print details
   if (require.main === module) {
@@ -20,7 +23,7 @@ function printOwing(invoice) {
     console.log(`amount: ${invoice.dueDate.toLocaleDateString()}`);
   } else {
     return `***********************\n**** Customer Owes ****\n***********************\n` +
-      `name: ${invoice.customer}\namount: ${outstanding}`;
+      `name: ${invoice.customer}\namount: ${outstanding}\namount: ${invoice.dueDate.toLocaleDateString()}`;
   }
 }
 
