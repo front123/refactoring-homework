@@ -11,19 +11,19 @@ function getDueDate(){
   return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
 }
 
+function generateDetail(invoice, outstanding){
+  return `***********************\n**** Customer Owes ****\n***********************\n` +
+      `name: ${invoice.customer}\namount: ${outstanding}\namount: ${invoice.dueDate.toLocaleDateString()}`;
+}
+
 function printOwing(invoice) {
   let outstanding = calculateOutstanding(invoice.borderSpacing);
   invoice.dueDate = getDueDate();
-
-  // print details
+  const detail = generateDetail(invoice, outstanding);
   if (require.main === module) {
-    console.log(`***********************\n**** Customer Owes ****\n***********************`)
-    console.log(`name: ${invoice.customer}`);
-    console.log(`amount: ${outstanding}`);
-    console.log(`amount: ${invoice.dueDate.toLocaleDateString()}`);
+    console.log(detail);
   } else {
-    return `***********************\n**** Customer Owes ****\n***********************\n` +
-      `name: ${invoice.customer}\namount: ${outstanding}\namount: ${invoice.dueDate.toLocaleDateString()}`;
+    return detail;
   }
 }
 
