@@ -1,11 +1,11 @@
 const { CHINA, EASTINDIES } = require('./constant')
-const places = [CHINA, EASTINDIES];
+const zones = [CHINA, EASTINDIES];
 
 function voyageRisk(voyage) {
   let result = 1;
   let voyageLength = voyage.length;
   result += voyageLength > 8 ? voyageLength - 6 : voyageLength > 4 ? 2 : 0;
-  result += places.includes(voyage.zone) ? 4 : 0;
+  result += zones.includes(voyage.zone) ? 4 : 0;
   return Math.max(result, 0);
 }
 
@@ -43,20 +43,18 @@ function voyageProfitFactor(voyage, history) {
   return result;
 }
 
-function compare(vpf, vr, chr) {
-  if (vpf * 3 > (vr + chr * 2)) {
+function compare(voyageProfitFactorResult, voyageRiskResult, captainHistoryRiskResult) {
+  if (voyageProfitFactorResult * 3 > (voyageRiskResult + captainHistoryRiskResult * 2)) {
     return 'A';
   }
-  else {
-    return 'B';
-  }
+  return 'B';
 }
 
 function rating(voyage, history) {
-  const vpf = voyageProfitFactor(voyage, history);
-  const vr = voyageRisk(voyage);
-  const chr = captainHistoryRisk(voyage, history);
-  return compare(vpf, vr, chr);
+  const voyageProfitFactorResult = voyageProfitFactor(voyage, history);
+  const voyageRiskResult = voyageRisk(voyage);
+  const captainHistoryRiskResult = captainHistoryRisk(voyage, history);
+  return compare(voyageProfitFactorResult, voyageRiskResult, captainHistoryRiskResult);
 }
 
 module.exports = {
