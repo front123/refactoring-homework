@@ -10,7 +10,7 @@ employeeTest('should return front (engineer) when toString given a employee with
 
 employeeTest('should throw error message when new Employee with a unknown type', t => {
   try {
-    let employee = new Employee('front', 'teacher');
+    new Employee('front', 'teacher');
   } catch (error) {
     t.is(error.message, `Employee cannot be of type teacher`);
   }
